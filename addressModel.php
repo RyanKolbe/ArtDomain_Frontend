@@ -2,13 +2,13 @@
 
 require_once 'C:\wamp64\www\ArtDomain\APIClient.php';
 
-class accountModel {
+class addressModel {
 	
 	var $BASE_URL;
 	var $apiClient;
 	
 	function __construct() {
-		$this->BASE_URL = 'http://localhost:8080/account/';
+		$this->BASE_URL = 'http://localhost:8080/address/';
 		$this->apiClient = new APIClient();
 	}
 	
@@ -20,12 +20,12 @@ class accountModel {
 		return $this->apiClient->call('GET', $this->BASE_URL.'read/'.$id);
 	}
 	
-	function create($account = array()) {
-		return $this->apiClient->call('POST', $this->BASE_URL.'create', $account);
+	function create($address = array()) {
+		return $this->apiClient->call('POST', $this->BASE_URL.'create', $address);
 }
 
-	function update($account = array()) {
-		return $this->apiClient->call('PUT', $this->BASE_URL.'update', $account);
+	function update($address = array()) {
+		return $this->apiClient->call('PUT', $this->BASE_URL.'update', $address);
 }
 
 	function delete($id) {

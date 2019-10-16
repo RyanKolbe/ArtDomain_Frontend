@@ -6,33 +6,33 @@ class APIClient
 	function call($method, $url, $data = '', $auth = '')
 	{
 		$curl = curl_init($url);
+		$adminUsername = 'admin';
+		$adminPassword = 'admin';
+		$adminHeaders = array(
+		'Content-Type: application/json',
+		'Authorization: Basic '. base64_encode("$adminUsername:$adminPassword"));
 		
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
 		
 		switch ($method) {
 			case "GET":
+				curl_setopt($curl, CURLOPT_HTTPHEADER, $adminHeaders);
 				curl_setopt($curl, CURLOPT_URL, $url);
 				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
 				break;
 			case "POST":
-				curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json',
-				'Accept: */*' ,
-				'Accept-Encoding: gzip, deflate' ,
-				'Authorization: Basic YWRtaW46YWRtaW4=' ,
-				'Cache-Control: no-cache' ,
-				'Connection: keep-alive' ,
-				'Content-Length: 108' ,
-				'cache-control: no-cache'));
+				curl_setopt($curl, CURLOPT_HTTPHEADER, $adminHeaders);
 				curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
 				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
 				break;
 			case "PUT":
-				curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+				curl_setopt($curl, CURLOPT_HTTPHEADER, $adminHeaders);
 				curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
 				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
 				break;				
 			case "DELETE":
 				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+				curl_setopt($curl, CURLOPT_HTTPHEADER, $adminHeaders);
 				curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
 				break;
 		}
